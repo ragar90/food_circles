@@ -1,4 +1,8 @@
 class Api::VenuesController < ApplicationController
+  skip_before_filter :email_server, only: [:homeless]
+  skip_before_filter :prepare_for_mobile, only: [:homeless]
+  skip_before_filter :detect_email_omniauth, only: [:homeless]
+  skip_before_filter :check_subdomain, only: [:homeless]
   def show
     render :json => {:error => false,
       :content => Venue.all.as_json(lat: params[:lat], lon: params[:lon], all: true),
